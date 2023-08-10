@@ -4,9 +4,14 @@
 name: Maven Package
 
 on:
-  release:
-    types: [created]
-
+  push:
+    branches: [ "develop", "release/*" ]
+  workflow_run:
+    workflows:
+      - "Java CI with Maven"
+    types: 
+      - completed
+    
 jobs:
   build:
 
