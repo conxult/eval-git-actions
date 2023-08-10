@@ -5,6 +5,14 @@
   <name>CX :: Eval Actions</name>
 
   <properties>
+    <java.source.version>17</java.source.version>
+    <java.target.version>17</java.target.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
+
     <cx-eval.version>1.0.0</cx-eval.version>
   </properties>
 
