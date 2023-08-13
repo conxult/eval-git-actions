@@ -35,9 +35,11 @@ jobs:
     - name: Show environment
       run: env && find target
 
+    - name: prepare publish
+      run: mkdir upload && cp target/*.jar upload
+      
     - name: publish to github
-    - run: mkdir upload && cp target/*.jar upload
-    - uses: actions/upload-artifact@v1
+      uses: actions/upload-artifact@v1
       with:
         name: Package
         path: upload
