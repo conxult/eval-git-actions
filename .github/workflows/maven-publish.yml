@@ -4,8 +4,10 @@
 name: Maven Package
 
 on:
+  workflow_dispatch:
   push:
     branches: [ "develop", "release/*" ]
+  
   workflow_run:
     workflows:
       - "Java CI with Maven"
