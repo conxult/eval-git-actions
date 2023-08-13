@@ -37,6 +37,7 @@ jobs:
       run: env
       
     - name: Publish to GitHub Packages Apache Maven
-      run: mvn deploy -s $GITHUB_WORKSPACE/settings.xml
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      uses: actions/upload-artifact@v1
+#        with:
+#          name: Package
+#          path: staging
