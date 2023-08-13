@@ -17,7 +17,15 @@
   </properties>
 
   <groupId>de.conxult</groupId>
-  <artifactId>eval</artifactId>
+  <artifactId>cx-eval-base</artifactId>
   <version>${cx-eval.version}</version>
+
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub Packages</name>
+      <url>https://maven.pkg.github.com/conxult/cx-eval-base</url>
+    </repository>
+  </distributionManagement>
 
 </project>
