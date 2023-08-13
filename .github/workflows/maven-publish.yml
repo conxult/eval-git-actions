@@ -33,10 +33,13 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Show environment
-      run: env && find target
+      run: env && find base/target
 
     - name: prepare publish
-      run: mkdir upload && cp target/*.jar upload
+      run: mkdir upload && cp base/target/*.jar upload
+
+    - name: check upload
+      run: find upload
       
     - name: publish to github
       uses: actions/upload-artifact@v1
