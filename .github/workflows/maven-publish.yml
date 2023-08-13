@@ -14,7 +14,6 @@ on:
     
 jobs:
   build:
-
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -35,9 +34,15 @@ jobs:
 
     - name: Show environment
       run: env
-      
+
+  publish:
+    runs-on: ubuntu-latest
+    needs: [build]
+
+    steps:
     - name: Publish to GitHub Packages Apache Maven
+    - run: mkdir upload && cp target/*.jar upload
       uses: actions/upload-artifact@v1
-#        with:
-#          name: Package
-#          path: staging
+        with:
+          name: Package
+          path: upload
