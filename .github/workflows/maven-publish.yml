@@ -40,7 +40,6 @@ jobs:
     needs: [build]
 
     steps:
-    - name: Publish to GitHub Packages Apache Maven
     - run: mkdir upload && cp target/*.jar upload
     - uses: actions/upload-artifact@v1
       with:
