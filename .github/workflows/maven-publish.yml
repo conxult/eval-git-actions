@@ -41,8 +41,13 @@ jobs:
     - name: check upload
       run: find upload
       
-    - name: publish to github
-      uses: actions/upload-artifact@v1
-      with:
-        name: Package
-        path: upload
+#   - name: publish to github
+#      uses: actions/upload-artifact@v1
+#      with:
+#        name: Package
+#        path: upload
+
+    - name: deploy to github
+      run: mvn --batch-mode deploy
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
