@@ -35,11 +35,17 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Show environment
-      run: env
+      run: env | sort
 
     - name: Show git version
       run: git -v
 
+    - name: checkout scripts
+      run: git clone https://github.com/conxult/eval-script.git 
+
+    - name: run script
+      run: eval-script/bin/do-something.sh
+      
     - name: prepare publish
       run: mkdir upload && cp base/target/*.jar upload
 
