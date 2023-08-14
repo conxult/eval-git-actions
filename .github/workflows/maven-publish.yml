@@ -59,7 +59,7 @@ jobs:
 #        path: upload
 
     - name: deploy to github
-      run: ls -al && cat settings.xml && mvn --batch-mode deploy
+      run: ls -al && cat settings.xml && mvn -s settings.xml --batch-mode deploy
       env:
         GITHUB_ACTOR: conxult
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
