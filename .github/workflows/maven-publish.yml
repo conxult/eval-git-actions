@@ -35,7 +35,10 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Show environment
-      run: env && find base/target
+      run: env
+
+    - name: Show git version
+      run: git -v
 
     - name: prepare publish
       run: mkdir upload && cp base/target/*.jar upload
