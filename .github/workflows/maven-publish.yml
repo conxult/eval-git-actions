@@ -59,6 +59,6 @@ jobs:
 #        path: upload
 
     - name: deploy to github
-      run: mvn --batch-mode deploy
+      run: ls -al && mvn --batch-mode deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
