@@ -15,14 +15,19 @@ on:
       - completed
     
 jobs:
-  build-and-publish:
+  setup:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
 
-    steps:
-    - uses: actions/checkout@v3
+  steps:
+    - name: setup
+      run: . .github/scripts/setup
+
+    - name: checkout scripts
+      run: git clone -o scripts https://github.com/conxult/eval-script.git 
+
+    - name: run script
+      run: echo scripts/bin/do-something.sh
+
     - name: Set up JDK 17
       uses: actions/setup-java@v3
       with:
@@ -31,9 +36,16 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: setup
-      run: . .github/scripts/setup
-      
+    - uses: actions/checkout@v3
+
+  build:
+    needs: [ setup ]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
     - name: mvn version
       run: |
         mvn versions:set -DnewVersion=$VERSION
@@ -42,12 +54,11 @@ jobs:
     - name: mvn package
       run: mvn -B package
 
-    - name: checkout scripts
-      run: git clone -o scripts https://github.com/conxult/eval-script.git 
+  publish:
+    needs: [build]
+    runs-on: ubuntu-latest
 
-    - name: run script
-      run: echo scripts/bin/do-something.sh
-      
+    steps:  
     - name: prepare publish
       run: mkdir upload && cp base/target/*.jar upload
 
