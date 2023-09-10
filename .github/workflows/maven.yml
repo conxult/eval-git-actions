@@ -41,18 +41,18 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: find . in build
-      run: find . | grep -v .git/
-    
     - name: mvn version
       run: |
         mvn versions:set -DnewVersion=$VERSION
         cd base && mvn versions:set -DnewVersion=$VERSION
 
-    - name: mvn package
-      run: mvn -B package
+#    - name: mvn package
+#      run: mvn -B package
 
     - name: mvn deploy
       env:
+        GITHUB_USERNAME: x-access-token
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: mvn deploy
+      run:
+        mvn --settings settings.xml deploy
+        
