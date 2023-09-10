@@ -15,9 +15,12 @@ on:
       - completed
     
 jobs:
-  setup:
+  maven:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
+      packages: write
+      
     steps:
     - uses: actions/checkout@v3
 
@@ -38,19 +41,6 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-  build:
-    needs: [ setup ]
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
-    - uses: actions/checkout@v3
-
-    - name: env in build
-      run: env | sort
-    
     - name: find . in build
       run: find . | grep -v .git/
     
@@ -62,25 +52,33 @@ jobs:
     - name: mvn package
       run: mvn -B package
 
-  publish:
-    needs: [build]
-    runs-on: ubuntu-latest
-
-    steps:  
     - name: prepare publish
-      run: mkdir upload && cp base/target/*.jar upload
+      run: |
+        mkdir upload
+        cp base/target/*.jar upload
+        find upload
+        echo GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: check upload
-      run: find upload
-      
-#   - name: publish to github
-#      uses: actions/upload-artifact@v1
-#      with:
-#        name: Package
-#        path: upload
-
-    - name: deploy to github
-      run: ls -al && cat settings.xml && mvn -s settings.xml --batch-mode deploy
-      env:
-        GITHUB_ACTOR: conxult
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      ###
+    - name: mvn publish
+      uses: mg-smartrent/github-actions-maven-release@v1.5
+      with:
+        # Filter the branch to execute the release on
+        release-branch-name: # optional
+        # Maven server repository id to push the artefacts to
+        maven-repo-server-id: 
+        # Maven server repository username
+        maven-repo-server-username: 
+        # Maven server repository password
+        maven-repo-server-password: 
+        # The git user name for commiting the release
+        git-release-bot-name: 
+        # The git user email for commiting the release
+        git-release-bot-email: 
+        # Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line
+        access-token: 
+        # Publish the released artifact to GitHub Packages
+        maven-release-publish: # optional
+        # Publish the new post release snapshot artifact to GitHub Packages
+        maven-snapshot-publish: # optional
+      ###
