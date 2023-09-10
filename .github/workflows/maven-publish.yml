@@ -34,14 +34,11 @@ jobs:
     - name: setup
       run: . .github/scripts/setup
       
-    - name: Build with Maven
-      run: mvn -B package --file pom.xml
+    - name: mvn vwrsion
+      run: mvn versions:set -DnewVersion=$VERSION
 
-    - name: Show environment
-      run: env | sort
-
-    - name: Show git version
-      run: git -v
+    - name: mvn clean install
+      run: mvn clean install
 
     - name: checkout scripts
       run: git clone https://github.com/conxult/eval-script.git 
