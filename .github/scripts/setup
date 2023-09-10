@@ -9,3 +9,6 @@ git -v
 javac -version
 
 mvn -version
+
+npm -version
+node -version
