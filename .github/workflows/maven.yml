@@ -43,10 +43,10 @@ jobs:
       run: mvn -B package
 
     - name: checkout scripts
-      run: git clone https://github.com/conxult/eval-script.git 
+      run: git clone -o scripts https://github.com/conxult/eval-script.git 
 
     - name: run script
-      run: echo eval-script/bin/do-something.sh
+      run: echo scripts/bin/do-something.sh
       
     - name: prepare publish
       run: mkdir upload && cp base/target/*.jar upload
