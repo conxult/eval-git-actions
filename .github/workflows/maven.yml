@@ -38,13 +38,17 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
-        server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
 
     - name: mvn version
       run: |
         mvn versions:set -DnewVersion=$VERSION
         cd base && mvn versions:set -DnewVersion=$VERSION
+
+    - name: Publish package
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+      run: mvn --batch-mode deploy
+          
 
 #    - name: mvn package
 #      run: mvn -B package
