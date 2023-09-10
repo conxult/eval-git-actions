@@ -25,7 +25,7 @@ jobs:
       run: . .github/scripts/setup
 
     - name: checkout scripts
-      run: git clone -o scripts https://github.com/conxult/eval-script.git 
+      run: git clone https://github.com/conxult/eval-script.git scripts
 
     - name: run script
       run: echo scripts/bin/do-something.sh
@@ -38,9 +38,6 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
-    - name: find . in setup
-      run: find . | grep -v .git/
-
   build:
     needs: [ setup ]
     runs-on: ubuntu-latest
@@ -49,6 +46,11 @@ jobs:
       packages: write
 
     steps:
+    - uses: actions/checkout@v3
+
+    - name: env in build
+      run: env | sort
+    
     - name: find . in build
       run: find . | grep -v .git/
     
