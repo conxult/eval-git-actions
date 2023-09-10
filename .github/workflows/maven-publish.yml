@@ -35,7 +35,9 @@ jobs:
       run: . .github/scripts/setup
       
     - name: mvn version
-      run: mvn versions:set -DnewVersion=$VERSION
+      run: |
+        mvn versions:set -DnewVersion=$VERSION
+        cd base && mvn versions:set -DnewVersion=$VERSION
 
     - name: mvn package
       run: mvn -B package
