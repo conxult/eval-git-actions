@@ -17,4 +17,13 @@
     <module>base</module>
   </modules>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub conxult Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/conxult/eval-git-actions-pom</url>
+    </repository>
+  </distributionManagement>
+
+
 </project>
