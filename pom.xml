@@ -17,11 +17,4 @@
     <module>base</module>
   </modules>
 
-  <distributionManagement>
-    <repository>
-      <id>github</id>
-      <name>GitHub OWNER Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/conxult/eval-git-actions</url>
-    </repository>
-  </distributionManagement>
 </project>
