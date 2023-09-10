@@ -11,4 +11,4 @@ javac -version
 mvn -version
 
 npm -version
-node -version
+node -v
