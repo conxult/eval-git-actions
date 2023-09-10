@@ -38,6 +38,9 @@ jobs:
         server-id: github # Value of the distributionManagement/repository/id field of the pom.xml
         settings-path: ${{ github.workspace }} # location for the settings.xml file
 
+    - name: find . in setup
+      run: find . | grep -v .git/
+
   build:
     needs: [ setup ]
     runs-on: ubuntu-latest
@@ -46,6 +49,9 @@ jobs:
       packages: write
 
     steps:
+    - name: find . in build
+      run: find . | grep -v .git/
+    
     - name: mvn version
       run: |
         mvn versions:set -DnewVersion=$VERSION
