@@ -34,11 +34,11 @@ jobs:
     - name: setup
       run: . .github/scripts/setup
       
-    - name: mvn vwrsion
+    - name: mvn version
       run: mvn versions:set -DnewVersion=$VERSION
 
-    - name: mvn clean install
-      run: mvn clean install
+    - name: mvn package
+      run: mvn -B package
 
     - name: checkout scripts
       run: git clone https://github.com/conxult/eval-script.git 
