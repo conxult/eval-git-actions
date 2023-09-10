@@ -47,9 +47,8 @@ jobs:
     - name: Publish package
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      run: cd base && mvn --batch-mode deploy
+      run: cat settings.xml && cd base && mvn --batch-mode deploy
           
 
 #    - name: mvn package
 #      run: mvn -B package
-
