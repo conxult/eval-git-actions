@@ -52,33 +52,5 @@ jobs:
     - name: mvn package
       run: mvn -B package
 
-    - name: prepare publish
-      run: |
-        mkdir upload
-        cp base/target/*.jar upload
-        find upload
-        echo GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      ###
-    - name: mvn publish
-      uses: mg-smartrent/github-actions-maven-release@v1.5
-      with:
-        # Filter the branch to execute the release on
-        release-branch-name: # optional
-        # Maven server repository id to push the artefacts to
-        maven-repo-server-id: 
-        # Maven server repository username
-        maven-repo-server-username: 
-        # Maven server repository password
-        maven-repo-server-password: 
-        # The git user name for commiting the release
-        git-release-bot-name: 
-        # The git user email for commiting the release
-        git-release-bot-email: 
-        # Github access token. https://help.github.com/en/github/authenticating-to-github/creating-a-personal-access-token-for-the-command-line
-        access-token: 
-        # Publish the released artifact to GitHub Packages
-        maven-release-publish: # optional
-        # Publish the new post release snapshot artifact to GitHub Packages
-        maven-snapshot-publish: # optional
-      ###
+    - name: mvn deploy
+      run: mvn deploy
