@@ -33,7 +33,7 @@ jobs:
     - name: run script
       run: echo scripts/bin/do-something.sh
 
-    - name: Set up JDK 17
+    - name: setup java 17
       uses: actions/setup-java@v3
       with:
         java-version: '17'
@@ -44,7 +44,7 @@ jobs:
         mvn versions:set -DnewVersion=$VERSION
         cd base && mvn versions:set -DnewVersion=$VERSION
 
-    - name: Publish package
+    - name: mvn deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: cd base && mvn --batch-mode deploy
