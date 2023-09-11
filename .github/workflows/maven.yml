@@ -51,5 +51,8 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: cd base && mvn --batch-mode deploy
 
+    - name: cat ~/.m2/settings.xml
+      run: cat ~/.m2/settings.xml
+
 #    - name: mvn package
 #      run: mvn -B package
