@@ -54,5 +54,5 @@ jobs:
     - name: cat ~/.m2/settings.xml
       run: cat ~/.m2/settings.xml
 
-#    - name: mvn package
-#      run: mvn -B package
+    - name: mvn package
+      run: mvn -B package
