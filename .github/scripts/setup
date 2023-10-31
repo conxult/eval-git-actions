@@ -1,7 +1,22 @@
 #!/bin/bash
 
+
+
+
+
+git -v
+
+javac -version
+
+mvn -version
+
+npm -version
+node -v
+
 export GIT_BRANCH=$GITHUB_REV_NAME
 export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
+
+env | sort
 
 setVersion() {
   case $BRANCH in
@@ -63,20 +78,8 @@ setVersion() {
   esac
 }
 
-setVersion()
-
-
-
-env | sort
-
-git -v
-
-javac -version
-
-mvn -version
-
-npm -version
-node -v
+setVersion
 
 echo VERSION=$VERSION >> $GITHUB_ENV
+
 
