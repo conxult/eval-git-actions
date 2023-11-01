@@ -90,11 +90,11 @@ findPoms() {
 mavenSetVersion() {
   echo set versions in poms to $VERSION
              mvn versions:set --batch-mode -DnewVersion=$VERSION
-  cd base && mvn versions:set --batch-mode -DnewVersion=$VERSION
+  (cd base && mvn versions:set --batch-mode -DnewVersion=$VERSION)
 }
 
 mavenDeploy() {
-  cd base && mvn --batch-mode deploy
+  (cd base && mvn --batch-mode deploy)
 }
 
 echo finished scripts/setup
