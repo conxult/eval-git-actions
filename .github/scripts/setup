@@ -12,6 +12,7 @@ export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 env | sort | grep ^[A-Z]
 
 setVersion() {
+
   case $GIT_BRANCH in
 
     ###########################################
@@ -69,15 +70,19 @@ setVersion() {
       ;;
 
   esac
+
+  echo VERSION=$VERSION >> $GITHUB_ENV
+  echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
+
+  echo $GITHUB_ENV 
+  cat $GITHUB_ENV 
 }
 
-setVersion
-
-echo VERSION=$VERSION >> $GITHUB_ENV
-echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
-
-echo $GITHUB_ENV 
-cat $GITHUB_ENV 
+setMavenVersion() {
+  echo set versions in poms to $VERSION
+  mvn versions:set -DnewVersion=$VERSION
+  cd base && mvn versions:set -DnewVersion=$VERSION
+}
 
 echo finished scripts/setup
 

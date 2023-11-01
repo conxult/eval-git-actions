@@ -6,12 +6,18 @@
   <packaging>pom</packaging>
 
   <properties>
-    <cx-eval.version>1.0.0</cx-eval.version>
+    <java.source.version>17</java.source.version>
+    <java.target.version>17</java.target.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+    <maven.compiler.source>17</maven.compiler.source>
+    <maven.compiler.target>17</maven.compiler.target>
+    <maven.compiler.parameters>true</maven.compiler.parameters>
   </properties>
 
   <groupId>de.conxult</groupId>
   <artifactId>eval-pom</artifactId>
-  <version>${cx-eval.version}</version>
+  <version>1.0-SNAPSHOT</version>
 
   <modules>
     <module>base</module>
