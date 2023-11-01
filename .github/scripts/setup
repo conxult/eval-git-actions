@@ -79,6 +79,7 @@ setVersion() {
 }
 
 findPoms() {
+  echo findPoms in `pwd`
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom)
       pwd
