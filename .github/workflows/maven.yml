@@ -47,14 +47,21 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
- 
-    - name: mvn clean install deploy
+
+    - name: mvn clean install
+      run: |
+        mvn --batch-mode clean install
+
+    - name: mvn package
+      run: |
+        mvn -B package
+
+        
+    - name: mvn deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
         cat $GITHUB_WORKSPACE/settings.xml
         sleep 5
-        mvn --batch-mode clean install
-        sleep 5
-        mvn --batch-mode -s $GITHUB_WORKSPACE/settings.xml deploy
+        mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
 
