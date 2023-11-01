@@ -48,12 +48,8 @@ jobs:
         distribution: 'temurin'
         cache: 'maven'
  
-    - name: mvn build
-      run: mvn clean install
-
-    - name: mvn deploy
+    - name: mvn clean install deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
-      run: |
-        mvn --batch-mode deploy
-        cd base && mvn --batch-mode deploy
+      run: mvn --batch-mode clean install deploy
+
