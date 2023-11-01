@@ -80,8 +80,8 @@ setVersion() {
 
 setMavenVersion() {
   echo set versions in poms to $VERSION
-  mvn versions:set -DnewVersion=$VERSION
-  cd base && mvn versions:set -DnewVersion=$VERSION
+             mvn versions:set --batch-mode -DnewVersion=$VERSION
+  cd base && mvn versions:set --batch-mode -DnewVersion=$VERSION
 }
 
 echo finished scripts/setup
