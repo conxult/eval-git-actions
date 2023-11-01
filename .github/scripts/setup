@@ -78,6 +78,15 @@ setVersion() {
   cat $GITHUB_ENV 
 }
 
+findPoms() {
+  for pom in `find . -name pom.xml`; do 
+    pushd $(dirname $pom)
+      pwd
+      egrep '<(name|packaging|groupId|artifactId|version)>' pom.xml | head -5
+    popd
+  done
+}
+
 mavenSetVersion() {
   echo set versions in poms to $VERSION
              mvn versions:set --batch-mode -DnewVersion=$VERSION
