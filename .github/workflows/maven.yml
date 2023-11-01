@@ -61,5 +61,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        cd base && mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml
+        cd base && mvn --batch-mode deploy
 
