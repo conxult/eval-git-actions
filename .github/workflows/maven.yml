@@ -52,6 +52,9 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
+        cat $GITHUB_WORKSPACE/settings.xml
+        sleep 5
         mvn --batch-mode clean install
+        sleep 5
         mvn --batch-mode -s $GITHUB_WORKSPACE/settings.xml deploy
 
