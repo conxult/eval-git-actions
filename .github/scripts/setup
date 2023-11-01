@@ -74,5 +74,10 @@ setVersion() {
 setVersion
 
 echo VERSION=$VERSION >> $GITHUB_ENV
+echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
 
+echo $GITHUB_ENV 
+cat $GITHUB_ENV 
+
+echo finished scripts/setup
 
