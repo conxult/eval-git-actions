@@ -92,11 +92,9 @@ mavenSetVersion() {
   echo set versions in poms to $VERSION
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom)
-      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
-        mvn versions:set --batch-mode -DnewVersion=$VERSION
-        echo set version in `pwd` to $VERSION
-        git diff pom.xml
-      fi
+      mvn versions:set --batch-mode -DnewVersion=$VERSION
+      echo set version in `pwd` to $VERSION
+      git diff pom.xml
     popd
   done
 }
