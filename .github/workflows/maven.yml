@@ -54,7 +54,7 @@ jobs:
 
     - name: mvn clean install
       run: |
-        mvn --batch-mode clean install
+        mvn --batch-mode clean install |& egrep -v '(Downloading|Downloaded)'
         
     - name: mvn deploy
       env:

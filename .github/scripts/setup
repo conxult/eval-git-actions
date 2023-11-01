@@ -84,20 +84,21 @@ setVersion() {
 mavenSetVersions() {
   echo set versions in poms to $VERSION
   for pom in `find . -name pom.xml`; do 
-    pushd $(dirname $pom)
-      mvn versions:set --batch-mode -DnewVersion=$VERSION
-    popd
+    pushd $(dirname $pom) >> /dev/null
+      mvn versions:set --batch-mode -DnewVersion=$VERSION |& egrep -v '(Downloading|Downloaded)'
+      git diff pom.xml
+    popd >> /dev/null
   done
 }
 
 mavenDeploy() {
   echo deploy poms with jar packaging
   for pom in `find . -name pom.xml`; do 
-    pushd $(dirname $pom)
+    pushd $(dirname $pom) >> /dev/null
       if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
-        mvn --batch-mode deploy
+        mvn --batch-mode deploy |& egrep -v '(Downloading|Downloaded)'
       fi
-    popd
+    popd >> /dev/null
   done
 }
 
