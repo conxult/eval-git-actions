@@ -85,8 +85,8 @@ mavenSetVersions() {
   echo set versions in poms to $VERSION
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom) >> /dev/null
+      echo mvn versions:set in `pwd`
       mvn versions:set --batch-mode -DnewVersion=$VERSION |& egrep -v '(Downloading|Downloaded)'
-      git diff pom.xml
     popd >> /dev/null
   done
 }
