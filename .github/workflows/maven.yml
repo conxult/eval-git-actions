@@ -55,4 +55,5 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
+        mvn --batch-mode deploy
         cd base && mvn --batch-mode deploy
