@@ -33,6 +33,7 @@ jobs:
       run: |
         . .github/scripts/setup
         setVersion
+        setMavenVersion
 
 #    - name: checkout scripts
 #      run: |
@@ -46,10 +47,6 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: 'maven'
-
-    - name: mvn version
-      run: |
-        setMavenVersion
  
     - name: mvn deploy
       env:
