@@ -81,7 +81,7 @@ setVersion() {
   cat $GITHUB_ENV 
 }
 
-mavenSetVersion() {
+mavenSetVersions() {
   echo set versions in poms to $VERSION
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom)

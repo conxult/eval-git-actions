@@ -29,15 +29,12 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
 
-    - name: setup
-      run: |
-        . .github/scripts/setup
-        setVersion
-        mavenSetVersion
-
-    - name: display version
-      run: |
-        echo VERSION=$VERSION
+    - name: setup java 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+        cache: 'maven'
 
 #    - name: checkout scripts
 #      run: |
@@ -45,12 +42,15 @@ jobs:
 #        find scripts
 #        echo scripts/bin/do-something.sh
 
-    - name: setup java 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: 'maven'
+    - name: set version
+      run: |
+        . .github/scripts/setup
+        setVersion
+
+    - name: mvn versions:set
+      run: |
+        . .github/scripts/setup
+        mavenSetVersions
 
     - name: mvn clean install
       run: |
