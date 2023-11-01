@@ -35,6 +35,10 @@ jobs:
         setVersion
         mavenSetVersion
 
+    - name: display version
+      run: |
+        echo VERSION=$VERSION
+
 #    - name: checkout scripts
 #      run: |
 #        git clone https://github.com/conxult/eval-script.git scripts

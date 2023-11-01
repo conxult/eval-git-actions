@@ -1,15 +1,19 @@
 #!/bin/bash
 
-git --version
-javac -version
-mvn -version
-npm -version
-node -v
-
 export GIT_BRANCH=$GITHUB_REF_NAME
 export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 
-env | sort | grep ^[A-Z]
+showVersions() {
+  git --version
+  javac -version
+  mvn -version
+  npm -version
+  node -v
+}
+
+showEnvironment() {
+  env | sort | grep ^[A-Z]
+}
 
 setVersion() {
 
@@ -71,21 +75,10 @@ setVersion() {
 
   esac
 
-  echo VERSION=$VERSION >> $GITHUB_ENV
   echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
+  echo VERSION=$VERSION >> $GITHUB_ENV
 
-  echo $GITHUB_ENV 
   cat $GITHUB_ENV 
-}
-
-findPoms() {
-  echo findPoms in `pwd`
-  for pom in `find . -name pom.xml`; do 
-    pushd $(dirname $pom)
-      pwd
-      egrep '<(name|packaging|groupId|artifactId|version)>' pom.xml | head -5
-    popd
-  done
 }
 
 mavenSetVersion() {
@@ -93,13 +86,12 @@ mavenSetVersion() {
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom)
       mvn versions:set --batch-mode -DnewVersion=$VERSION
-      echo set version in `pwd` to $VERSION
-      git diff pom.xml
     popd
   done
 }
 
 mavenDeploy() {
+  echo deploy poms with jar packaging
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom)
       if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
