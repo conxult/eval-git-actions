@@ -53,6 +53,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
         mvn --batch-mode clean install
-        mvn -N --batch-mode deploy
-        cd base && mvn --batch-mode deploy
+        mvn --batch-mode -s $GITHUB_WORKSPACE/settings.xml deploy
 

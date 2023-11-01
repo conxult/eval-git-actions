@@ -14,4 +14,12 @@
     <version>1.0-SNAPSHOT</version>
   </parent>
 
+  <distributionManagement>
+    <repository>
+      <id>github</id>
+      <name>GitHub conxult Apache Maven Packages</name>
+      <url>https://maven.pkg.github.com/conxult/eval-git-actions</url>
+    </repository>
+  </distributionManagement>
+
 </project>
