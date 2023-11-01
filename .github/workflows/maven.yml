@@ -4,7 +4,8 @@
 name: Maven Package
 
 env:
-  VERSION_BASE: 1.0
+  PROJECT_NAME: "cx-eval-base"
+  VERSION_BASE: "1.0"
 
 on:
   workflow_dispatch:
