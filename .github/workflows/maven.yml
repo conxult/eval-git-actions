@@ -57,7 +57,5 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
         . .github/scripts/setup
-        findPoms
         mavenDeploy
-        findPoms
 

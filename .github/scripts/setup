@@ -90,13 +90,22 @@ findPoms() {
 
 mavenSetVersion() {
   echo set versions in poms to $VERSION
-             mvn versions:set --batch-mode -DnewVersion=$VERSION
-  (cd base && mvn versions:set --batch-mode -DnewVersion=$VERSION)
+  for pom in `find . -name pom.xml`; do 
+    pushd $(dirname $pom)
+      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
+        mvn versions:set --batch-mode -DnewVersion=$VERSION
+      fi
+    popd
+  done
 }
 
 mavenDeploy() {
-  (cd base && mvn --batch-mode deploy)
+  for pom in `find . -name pom.xml`; do 
+    pushd $(dirname $pom)
+      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
+        mvn --batch-mode deploy
+      fi
+    popd
+  done
 }
-
-echo finished scripts/setup
 
