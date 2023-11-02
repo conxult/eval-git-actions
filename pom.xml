@@ -27,7 +27,7 @@
     <repository>
       <id>github</id>
       <name>GitHub conxult Apache Maven Packages</name>
-      <url>https://maven.pkg.github.com/conxult/eval-git-actions-pom</url>
+      <url>https://maven.pkg.github.com/conxult/eval-git-actions</url>
     </repository>
   </distributionManagement>
 
