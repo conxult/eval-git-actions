@@ -91,9 +91,9 @@ mavenDeploy() {
   echo deploy poms with jar packaging
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom) >> /dev/null
-      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
+#      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
         mvn --batch-mode deploy |& egrep -v '(Downloading|Downloaded)'
-      fi
+#      fi
     popd >> /dev/null
   done
 }
