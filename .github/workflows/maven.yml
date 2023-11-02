@@ -48,21 +48,20 @@ jobs:
         . .github/scripts/setup
         setVersion
 
-    - name: mvn versions:set
+    - name: mvn versions:set 
       run: |
         echo mvn versions:set -B -DnewVersion=$VERSION
-        mvn versions:set -B -DnewVersion=$VERSION
-#        . .github/scripts/setup
-#        mavenSetVersions
 
     - name: mvn clean install
       run: |
-        mvn -B clean install
+        echo mvn -B clean install
         
-    - name: mvn deploy
+    - name: maven versions build deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
+        mvn versions:set -B -DnewVersion=$VERSION
+        mvn -B clean install      
         mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         
 
