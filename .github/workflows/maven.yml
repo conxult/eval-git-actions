@@ -43,25 +43,17 @@ jobs:
 #        find scripts
 #        echo scripts/bin/do-something.sh
 
-    - name: set version
+    - name: versioning
       run: |
         . .github/scripts/setup
         setVersion
+        mvn -B versions:set -DnewVersion=$VERSION
 
-    - name: mvn versions:set 
-      run: |
-        echo mvn versions:set -B -DnewVersion=$VERSION
-
-    - name: mvn clean install
-      run: |
-        echo mvn -B clean install
-        
     - name: maven versions build deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        mvn versions:set -B -DnewVersion=$VERSION
-        mvn -B clean install      
-        mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        mvn -B clean install deploy -s $GITHUB_WORKSPACE/settings.xml        
+        echo mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         
 
