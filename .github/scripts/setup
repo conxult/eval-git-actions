@@ -92,7 +92,7 @@ mavenDeploy() {
   for pom in `find . -name pom.xml`; do 
     pushd $(dirname $pom) >> /dev/null
       if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
-        mvn --batch-mode deploy |& egrep -v '(Downloading|Downloaded)'
+        mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml # |& egrep -v '(Downloading|Downloaded)'
       fi
     popd >> /dev/null
   done
