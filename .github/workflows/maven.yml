@@ -34,6 +34,7 @@ jobs:
       with:
         java-version: '17'
         distribution: 'temurin'
+        settings-path: ${{ github.workspace }} # location for the settings.xml file
         cache: 'maven'
 
 #    - name: checkout scripts
@@ -54,12 +55,15 @@ jobs:
 
     - name: mvn clean install
       run: |
-        mvn --batch-mode clean install |& egrep -v '(Downloading|Downloaded)'
+        echo mvn --batch-mode clean install
+        mvn --batch-mode -B package --file pom.xml
         
     - name: mvn deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        . .github/scripts/setup
-        mavenDeploy
+        echo . .github/scripts/setup
+        echo mavenDeploy
+        mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        
 
