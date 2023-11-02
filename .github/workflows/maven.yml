@@ -53,10 +53,14 @@ jobs:
         . .github/scripts/setup
         mavenSetVersions
 
-    - name: mvn clean install
+    - name: mvn clean install package
       run: |
         echo mvn --batch-mode clean install
-        mvn --batch-mode -B package --file pom.xml
+        echo pom.xml:
+        cat pom.xml
+        echo base/pom.xml:
+        cat base/pom.xml
+        mvn -B clean install package
         
     - name: mvn deploy
       env:
