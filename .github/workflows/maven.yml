@@ -48,7 +48,10 @@ jobs:
       run: |
         . scripts/versioning
         mvn -B versions:set -DnewVersion=$VERSION
+        echo GGGGGGGGGGGGGGGGGGGGGGG
+        git --version
         git tag -l
+        echo HHHHHHHHHHHHHHHHHHHHHHH
 
     - name: build
       run: |
