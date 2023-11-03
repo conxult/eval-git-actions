@@ -50,6 +50,10 @@ jobs:
       packages: write
       
     steps:
+    - name: show information
+      run: |
+        find .
+
 
 #    - name: checkout scripts
 #      run: |
