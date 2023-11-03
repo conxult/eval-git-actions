@@ -55,8 +55,9 @@ jobs:
 
     - name: tag
       run: |
-        echo git tag -a v$VERSION
-        
+        git tag -a v$VERSION .
+        git push
+
     - name: deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
