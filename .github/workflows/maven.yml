@@ -20,6 +20,12 @@ on:
     
 jobs:
   setup:
+    runs-on: ubuntu-latest
+    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
+    permissions:
+      contents: read
+      packages: write
+
     steps:
     - name: checkout
       uses: actions/checkout@v3
@@ -35,7 +41,6 @@ jobs:
   maven:
     needs: setup
     runs-on: ubuntu-latest
-    if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
     permissions:
       contents: read
       packages: write
