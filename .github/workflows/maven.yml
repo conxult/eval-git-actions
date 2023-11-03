@@ -19,7 +19,7 @@ on:
       - completed
     
 jobs:
-  setup:
+  build:
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
     permissions:
@@ -38,23 +38,6 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
         cache: 'maven'
 
-    - name: show information
-      run: |
-        find .
-
-  maven:
-    needs: setup
-    runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
-      
-    steps:
-    - name: show information
-      run: |
-        find .
-
-
 #    - name: checkout scripts
 #      run: |
 #        git clone https://github.com/conxult/eval-script.git scripts
@@ -64,13 +47,21 @@ jobs:
     - name: versioning
       run: |
         . scripts/versioning
+        mvn -B versions:set -DnewVersion=$VERSION
 
-    - name: maven versions build deploy
+    - name: build
+      run: |
+        mvn -B clean install
+
+    - name: tag
+      run: |
+        echo git tag -a v$VERSION
+        
+    - name: deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
-        mvn -B versions:set -DnewVersion=$VERSION
-        mvn -B clean install deploy -s $GITHUB_WORKSPACE/settings.xml        
-        echo mvn deploy -s $GITHUB_WORKSPACE/settings.xml
+        mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml        
+
         
 
