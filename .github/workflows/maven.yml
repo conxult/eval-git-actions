@@ -61,7 +61,7 @@ jobs:
 
     - name: Tag and push current repo code
       env:
-        GITHUB_TOKEN: ${{ secrets.git_tag }}
+        GITHUB_TOKEN: ${{ secrets.GIT }}
       run: |
           env|grep VER|sort
           git tag ${{github.run_id}}
