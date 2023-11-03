@@ -60,9 +60,6 @@ jobs:
         mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml
 
     - name: Tag and push current repo code
-      env:
-        GITHUB_TOKEN: ${{ secrets.GIT }}
       run: |
-          env|grep VER|sort
-          git tag ${{github.run_id}}
-          git push origin ${{github.run_id}}
+          git tag -l
+          echo git push origin ${{github.run_id}}
