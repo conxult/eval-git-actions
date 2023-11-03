@@ -55,8 +55,7 @@ jobs:
 
     - name: tag
       run: |
-        git tag -a v$VERSION .
-        git push
+        git tag v$VERSION
 
     - name: deploy
       env:
