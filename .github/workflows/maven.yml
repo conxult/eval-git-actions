@@ -50,6 +50,7 @@ jobs:
         mvn -B versions:set -DnewVersion=$VERSION
         echo GGGGGGGGGGGGGGGGGGGGGGG
         git --version
+        git branch -l
         git tag -l
         echo HHHHHHHHHHHHHHHHHHHHHHH
 
