@@ -55,9 +55,14 @@ jobs:
 
     - name: deploy
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
-        mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml        
+        mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml
 
+    - name: tags
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git tag -l
         
 
