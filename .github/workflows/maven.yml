@@ -45,14 +45,13 @@ jobs:
 
     - name: versioning
       run: |
-        . .github/scripts/setup
-        setVersion
-        mvn -B versions:set -DnewVersion=$VERSION
+        . scripts/versioning
 
     - name: maven versions build deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
       run: |
+        mvn -B versions:set -DnewVersion=$VERSION
         mvn -B clean install deploy -s $GITHUB_WORKSPACE/settings.xml        
         echo mvn deploy -s $GITHUB_WORKSPACE/settings.xml
         
