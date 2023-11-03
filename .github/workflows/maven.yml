@@ -38,6 +38,10 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
         cache: 'maven'
 
+    - name: show information
+      run: |
+        find .
+
   maven:
     needs: setup
     runs-on: ubuntu-latest
