@@ -3,19 +3,7 @@
 export GIT_BRANCH=$GITHUB_REF_NAME
 export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 
-showVersions() {
-  git --version
-  javac -version
-  mvn -version
-  npm -version
-  node -v
-}
-
-showEnvironment() {
-  env | sort | grep ^[A-Z]
-}
-
-setVersion() {
+#setVersion() {
 
   case $GIT_BRANCH in
 
@@ -77,24 +65,6 @@ setVersion() {
 
   echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
   echo VERSION=$VERSION >> $GITHUB_ENV
+#}
 
-  cat $GITHUB_ENV 
-}
-
-mavenSetVersions() {
-  echo set versions in poms to $VERSION
-  mvn versions:set --batch-mode -DnewVersion=$VERSION |& egrep -v '(Downloading|Downloaded)'
-  git diff .
-}
-
-mavenDeploy() {
-  echo deploy poms with jar packaging
-  for pom in `find . -name pom.xml`; do 
-    pushd $(dirname $pom) >> /dev/null
-      if [ $(grep '<packaging>jar</packaging>' pom.xml | wc -l) = 1 ] ; then
-        mvn --batch-mode deploy -s $GITHUB_WORKSPACE/settings.xml # |& egrep -v '(Downloading|Downloaded)'
-      fi
-    popd >> /dev/null
-  done
-}
-
+#setVersion
