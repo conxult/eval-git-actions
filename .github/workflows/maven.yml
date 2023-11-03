@@ -59,12 +59,10 @@ jobs:
       run: |
         mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml
 
-    - name: tags
-      uses: actions/checkout
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        git --version
-        git tag -l
-        
+    - name: Create a GitHub release
+      uses: ncipollo/release-action@v1
+      with:
+        tag: "v0.0.2"
+        name: "v0.0.2"
+        body: "V0.0.2"
 
