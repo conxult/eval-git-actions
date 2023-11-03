@@ -53,12 +53,6 @@ jobs:
       run: |
         mvn -B clean install
 
-    - name: tag
-      uses: tvdias/github-tagger@v0.0.1
-      with:
-        repo-token: ${{ secrets.GITHUB_TOKEN }}
-        tag: v$VERSION
-
     - name: deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 
