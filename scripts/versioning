@@ -3,8 +3,6 @@
 export GIT_BRANCH=$GITHUB_REF_NAME
 export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 
-#setVersion() {
-
   case $GIT_BRANCH in
 
     ###########################################
@@ -65,6 +63,3 @@ export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 
   echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
   echo VERSION=$VERSION >> $GITHUB_ENV
-#}
-
-#setVersion
