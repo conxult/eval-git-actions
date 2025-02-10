@@ -40,9 +40,7 @@ jobs:
 
     - name: versioning
       run: |
-        env | sort | tee env.1
         . scripts/versioning
-        env | sort | tee env.2
         mvn -B versions:set -DnewVersion=$VERSION
 
     - name: build
