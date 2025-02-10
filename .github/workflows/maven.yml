@@ -38,15 +38,12 @@ jobs:
         settings-path: ${{ github.workspace }} # location for the settings.xml file
         cache: 'maven'
 
-#    - name: checkout scripts
-#      run: |
-#        git clone https://github.com/conxult/eval-script.git scripts
-#        find scripts
-#        echo scripts/bin/do-something.sh
-
     - name: versioning
       run: |
+        env | sort | tee env.1
         . scripts/versioning
+        env | sort | tee env.2
+        diff env.1 env.2
         mvn -B versions:set -DnewVersion=$VERSION
 
     - name: build
