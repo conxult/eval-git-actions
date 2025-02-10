@@ -42,6 +42,7 @@ jobs:
       run: |
         . scripts/versioning
         mvn -B versions:set -DnewVersion=$VERSION
+        find . -name pom.xml -exec grep version "{}" \;
 
     - name: build
       run: |
