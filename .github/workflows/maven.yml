@@ -43,7 +43,6 @@ jobs:
         env | sort | tee env.1
         . scripts/versioning
         env | sort | tee env.2
-        diff env.1 env.2
         mvn -B versions:set -DnewVersion=$VERSION
 
     - name: build
