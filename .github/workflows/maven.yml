@@ -57,6 +57,7 @@ jobs:
     steps:
     - name: build
       run: |
+        ls -al
         mvn -B clean install
 
   deploy:
