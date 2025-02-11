@@ -19,13 +19,13 @@ on:
       - completed
     
 jobs:
-  setup:
+  maven:
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
 
     runs-on: ubuntu-latest
 
     permissions:
-      contents: read
+      contents: write
       packages: write
 
     steps:
@@ -45,43 +45,17 @@ jobs:
         . .github/scripts/versioning
         mvn -B versions:set -DnewVersion=$VERSION
 
-  build:
-    needs: setup
-
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
-      packages: write
-
-    steps:
     - name: build
       run: |
         ls -al
         mvn -B clean install
 
-  deploy:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    permissions:
-      contents: write
-      packages: write
-
-    steps:
     - name: deploy
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       run: |
         mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml
 
-  release:
-    needs: build
-
-    runs-on: ubuntu-latest
-
-    steps:
     - name: tag
       run: |
           find . -name target -type d
