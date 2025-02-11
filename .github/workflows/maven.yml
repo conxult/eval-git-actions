@@ -20,6 +20,9 @@ on:
     
 jobs:
   build:
+    environment:
+      - JAVA_HOME=$JAVA_HOME_21_X64
+      
     runs-on: ubuntu-latest
     if: ${{ !contains(github.event.head_commit.message, '[skip-ci]') }}
     permissions:
@@ -30,13 +33,13 @@ jobs:
     - name: checkout
       uses: actions/checkout@v3
 
-    - name: setup java 21
-      uses: actions/setup-java@v3
-      with:
-        java-version: '21'
-        distribution: 'temurin'
-        settings-path: ${{ github.workspace }} # location for the settings.xml file
-        cache: 'maven'
+#    - name: setup java 21
+#      uses: actions/setup-java@v3
+#      with:
+#        java-version: '21'
+#        distribution: 'temurin'
+#        settings-path: ${{ github.workspace }} # location for the settings.xml file
+#        cache: 'maven'
 
     - name: versioning
       run: |
