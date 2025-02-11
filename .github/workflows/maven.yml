@@ -10,7 +10,7 @@ env:
 on:
   workflow_dispatch:
   push:
-    branches: [ "develop", "release/*", "task/*", "feature/*", "bugfix/*" ]
+    branches: [ "develop", "release/*", "task/*", "feature/*", "bugfix/*", "hotfix/*" ]
   
   workflow_run:
     workflows:
@@ -40,7 +40,7 @@ jobs:
 
     - name: versioning
       run: |
-        . scripts/versioning
+        . .github/scripts/versioning
         mvn -B versions:set -DnewVersion=$VERSION
         find . -name pom.xml -exec grep version "{}" \;
 
@@ -56,6 +56,5 @@ jobs:
 
     - name: Tag and push current repo code
       run: |
-          git tag v47.11
-          git push origin tag v47.11
-          echo git push origin ${{github.run_id}}
+          echo git tag v47.11
+          echo git push origin tag v47.11
