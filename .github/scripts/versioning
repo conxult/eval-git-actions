@@ -52,6 +52,7 @@ export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
     develop|task/*/*|feature/*/*|bugfix/*/*)
       echo Version Schema: Snapshot
       export VERSION=$VERSION_BASE-SNAPSHOT
+      echo VERSION_TAG=v47.11 >> $GITHUB_ENV
 #      $GIT_PIPELINE_ID
       ;;
 

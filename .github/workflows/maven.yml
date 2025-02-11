@@ -57,6 +57,7 @@ jobs:
         mvn -B deploy -s $GITHUB_WORKSPACE/settings.xml
 
     - name: tag
+      if: env.VERSION_TAG != ''
       run: |
           find . -name target -type d
           echo git tag v47.11
