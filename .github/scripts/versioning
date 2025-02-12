@@ -1,67 +1,75 @@
 #!/bin/bash
 
+export VERSION_BASE=1.0
+export VERSION_TAG=
+
 export GIT_BRANCH=$GITHUB_REF_NAME
-export GIT_PIPELINE_ID=$GITHUB_RUN_NUMBER
 
-  case $GIT_BRANCH in
+case $GIT_BRANCH in
 
-    ###########################################
-    # release/1.2.3-rc -> release candidate -> 1.2.3-rc.1 or 1.2.3-rc.(max+1)
-    release/*.*.*-rc)
-      export VERSION_BASE=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
-      export VERSION_TAGS=$(git tag -l v$VERSION_BASE.*)
+  ###########################################
+  # release/1.2.3-rc -> release candidate -> 1.2.3-rc.0 or 1.2.3-rc.(max+1)
+  release/*.*.*-rc)
+    export VERSION_BASE=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
+    export VERSION_TAGS=$(git tag -l v$VERSION_BASE.*)
   
-      if [[ -z ${VERSION_TAGS} ]] ; then
-        # this is the initial version
-        echo Version Schema: Release Candidate init $VERSION_BASE
-        export VERSION=$VERSION_BASE.1
-      else
-        # increment the latest found version
-        echo Version Schema: Release Candidate next $VERSION_BASE
-        export VERSION=$(semver -i prerelease $(semver $(git tag -l v$VERSION_BASE.*) | tail -n1 | sed 's/^v//g'))
-      fi
+    if [[ -z ${VERSION_TAGS} ]] ; then
+      # this is the initial version
+      echo Version Schema: Release Candidate init $VERSION_BASE
+      export VERSION=$VERSION_BASE.0
+    else
+      # increment the latest found version
+      echo Version Schema: Release Candidate next $VERSION_BASE
+      export VERSION=$(semver -i prerelease $(semver $(git tag -l v$VERSION_BASE.*) | tail -n1 | sed 's/^v//g'))
+    fi
+
+    export VERSION_TAG=v$VERSION
+    ;;
+
+  ###########################################
+  # release/1.2.3 -> fixed version -> 1.2.3 
+  release/*.*.*)
+    echo Version Schema: Fixed
+    export VERSION=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
+   
+    export VERSION_TAG=v$VERSION
+    ;;
+
+  ###########################################
+  # release/1.2 -> release -> 1.2.0 or 1.2.(max+1)
+  release/*.*)
+    export VERSION_BASE=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
+    export VERSION_TAGS=$(git tag -l v$VERSION_BASE.*)
   
-      ;;
+    if [[ -z ${VERSION_TAGS} ]] ; then
+      # this is the initial version
+      echo Version Schema: Release init $VERSION_BASE
+      export VERSION=$VERSION_BASE.0
+    else
+      # increment the latest found version
+      echo Version Schema: Release next $VERSION_BASE
+      export VERSION=$(semver -i $(semver $(git tag -l v$VERSION_BASE.*) | tail -n1 | sed 's/^v//g'))
+    fi
 
-    ###########################################
-    # release/1.2.3 -> fixed version -> 1.2.3 
-    release/*.*.*)
-      echo Version Schema: Fixed
-      export VERSION=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
-      ;;
-
-    ###########################################
-    # release/1.2 -> release -> 1.2.0 or 1.2.(max+1)
-    release/*.*)
-      export VERSION_BASE=$(echo $GIT_BRANCH | sed 's#release/\(.*\)#\1#')
-      export VERSION_TAGS=$(git tag -l v$VERSION_BASE.*)
+    export VERSION_TAG=v$VERSION
+    ;;
   
-      if [[ -z ${VERSION_TAGS} ]] ; then
-        # this is the initial version
-        echo Version Schema: Release init $VERSION_BASE
-        export VERSION=$VERSION_BASE.0
-      else
-        # increment the latest found version
-        echo Version Schema: Release next $VERSION_BASE
-        export VERSION=$(semver -i $(semver $(git tag -l v$VERSION_BASE.*) | tail -n1 | sed 's/^v//g'))
-      fi
-      ;;
-  
-    ###########################################
-    # snapshot version 1.2.3-4711
-    develop|task/*/*|feature/*/*|bugfix/*/*)
-      echo Version Schema: Snapshot
-      export VERSION=$VERSION_BASE-SNAPSHOT
-      #echo VERSION_TAG=v47.11 >> $GITHUB_ENV
-#      $GIT_PIPELINE_ID
-      ;;
+  ###########################################
+  # snapshot version 1.2-SNAPSHOT
+  develop|task/*/*|feature/*/*|bugfix/*/*|hotfix/*/*)
+    echo Version Schema: SNAPSHOT
+    export VERSION=$VERSION_BASE-SNAPSHOT
+    ;;
 
-    ###########################################
-    *)
-      echo Version Schema: illegal branch $GIT_BRANCH
-      ;;
+  ###########################################
+  *)
+    echo Version Schema: illegal branch $GIT_BRANCH
+    ;;
 
-  esac
+esac
 
-  echo VERSION_BASE=$VERSION_BASE >> $GITHUB_ENV
-  echo VERSION=$VERSION >> $GITHUB_ENV
+cat << EOF >> $GITHUB_ENV
+VERSION=$VERSION
+VERSION_BASE=$VERSION_BASE
+VERSION_TAG=$VERSION_TAG
+EOF

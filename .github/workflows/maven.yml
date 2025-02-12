@@ -4,7 +4,6 @@
 name: Maven
 
 env:
-  XX_PROJECT_NAME: "cx-eval-base"
   VERSION_BASE: "1.0"
 
 on:
