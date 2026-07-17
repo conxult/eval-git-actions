@@ -1,0 +1,68 @@
+plugins {
+    alias(libs.plugins.quarkus) apply false
+}
+
+subprojects {
+    apply plugin: 'java-library'
+    apply plugin: 'maven-publish'
+    apply plugin: 'io.quarkus'
+
+    group = projectGroup
+    version = projectVersion
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    java {
+        toolchain {
+            languageVersion = JavaLanguageVersion.of(21)
+        }
+    }
+
+    tasks.withType(JavaCompile).configureEach {
+        options.release = 21
+        options.encoding = 'UTF-8'
+        options.compilerArgs += '-parameters'
+    }
+
+    tasks.withType(Test).configureEach {
+        useJUnitPlatform()
+        maxHeapSize = '1g'
+    }
+
+    dependencies {
+        compileOnly libs.lombok
+        annotationProcessor libs.lombok
+
+        testCompileOnly libs.lombok
+        testAnnotationProcessor libs.lombok
+    }
+
+    publishing {
+        publications {
+            mavenJava(MavenPublication) {
+                from components.java
+		artifactId = project.name
+            }
+        }
+
+        repositories {
+            maven {
+                name = 'GitHubPackages'
+                url = uri('https://maven.pkg.github.com/conxult/eval-git-actions')
+
+                credentials {
+                    username = System.getenv('GITHUB_ACTOR')
+                    password = System.getenv('GITHUB_TOKEN')
+                }
+            }
+        }
+    }
+
+    afterEvaluate {
+        println "${project.path} -> ${group}:${project.name}:${version}"
+    }
+
+}

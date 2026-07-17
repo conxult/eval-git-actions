@@ -1,0 +1,18 @@
+
+[versions]
+
+quarkus = "3.37.0"
+lombok = "1.18.46"
+
+[plugins]
+
+quarkus = { id = "io.quarkus", version.ref = "quarkus" }
+
+[libraries]
+
+quarkus-bom = { module = "io.quarkus.platform:quarkus-bom", version.ref = "quarkus" }
+
+lombok = { module = "org.projectlombok:lombok", version.ref = "lombok" }
+
+
+
